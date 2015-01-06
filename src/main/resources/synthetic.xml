@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<synthetic xmlns="http://www.xebialabs.com/deployit/synthetic">
+
+<!-- FINRA -->
+    
+    <type type="aws.S3DeployedContent" extends="generic.ExecutedScriptWithDerivedArtifact" deployable-type="aws.S3File" container-type="aws.S3EndPoint">
+        <generate-deployable type="aws.S3File" extends="generic.File"/>
+        <property name="bucket_folder" required="true" default=""/>
+        <property name="createScript" default="aws/copy-to-s3_file.py" hidden="true" />
+        <property name="destroyScript" default="aws/delete-s3_file.py" hidden="true" />
+</type>
+
+<type type="aws.S3DeployedContentFolder" extends="generic.ExecutedScriptWithDerivedArtifact" deployable-type="aws.S3Folder" container-type="aws.S3EndPoint">
+        <generate-deployable type="aws.S3Folder" extends="generic.Folder"/>
+        <property name="bucket_folder" required="true" default=""/>      
+        <property name="createScript" default="aws/copy-to-s3_folder.py" hidden="true" />
+        <property name="destroyScript" default="aws/delete-s3_folder.py" hidden="true" />
+</type>
+
+<type type="aws.S3DeployedBucket" extends="generic.ExecutedScript" deployable-type="aws.S3Bucket" container-type="aws.S3EndPoint">
+        <generate-deployable type="aws.S3Bucket" extends="generic.Resource" />
+        <property name="createScript" default="aws/create_bucket.py" hidden="true" />
+        <property name="destroyScript" default="aws/delete_bucket.py" hidden="true" />
+</type>
+
+<type type="aws.EC2IAMDeployed" extends="generic.ExecutedScript" deployable-type="aws.EC2IAM" container-type="aws.S3EndPoint">
+        <generate-deployable type="aws.EC2IAM" extends="generic.Resource" />
+        <property name="ec2InstanceId" required="true" default="i-XXX"/>
+        <property name="instanceProfile" required="true" default="{u'id': u'XXX', u'arn': u'arn:aws:iam::XXX:instance-profile/XXX'}"/>
+        <property name="awsRegion" required="true" default="eu-west-1"/>
+        <property name="createScript" default="aws/setIAM.py" hidden="true" />
+        <property name="destroyScript" default="aws/removeIAM.py" hidden="true" />
+</type>
+
+<type type="aws.S3EndPoint" extends="overthere.LocalHost">
+        <property name="accessId" default=""/>
+        <property name="secretKey" password="true" default=""/>
+        <property name="bucketName" default=""/>
+        <property name="region" default="us-east-1"/>                  
+</type>
+
+<type type="aws.ELBEndPoint" extends="overthere.LocalHost">
+        <property name="accessId" default=""/>
+        <property name="secretKey" password="true" default=""/>
+        <property name="loadBalancerName" default=""/>
+        <method name="addInstancesToELB" delegate="shellScript" script="aws/add-to-elb.py" label="Add Instances to ELB">
+                <parameters>
+                        <parameter name="regionName" default=""/>
+                        <parameter name="vmTemplateName" default=""/>
+                        <parameter name="instanceCount" default="2"/>
+                        <parameter name="instanceType" default="t1.micro"/>
+                        <parameter name="securityGroup" default=""/>
+                </parameters>
+        </method>
+</type>
+
+<type-modification type="aws.ELBEndPoint">
+	<method name="addIAMRole" delegate="shellScript" script="aws/setIAM.py" label="Add IAM Role">
+		<parameters>
+			<parameter name="iamrole" default=""/>
+		</parameters>	
+	</method>
+</type-modification>	
+
+</synthetic>

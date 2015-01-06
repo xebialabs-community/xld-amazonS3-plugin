@@ -1,0 +1,3 @@
+apply plugin: 'commercial-plugin'
+
+version = "3.9.90-SNAPSHOT"
