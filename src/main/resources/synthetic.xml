@@ -1,9 +1,8 @@
 <?xml version="1.0" ?>
 <synthetic xmlns="http://www.xebialabs.com/deployit/synthetic">
 
-<!-- FINRA -->
     
-    <type type="aws.S3DeployedContent" extends="generic.ExecutedScriptWithDerivedArtifact" deployable-type="aws.S3File" container-type="aws.S3EndPoint">
+<type type="aws.S3DeployedContent" extends="generic.ExecutedScriptWithDerivedArtifact" deployable-type="aws.S3File" container-type="aws.S3EndPoint">
         <generate-deployable type="aws.S3File" extends="generic.File"/>
         <property name="bucket_folder" required="true" default=""/>
         <property name="createScript" default="aws/copy-to-s3_file.py" hidden="true" />

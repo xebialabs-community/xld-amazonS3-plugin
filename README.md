@@ -1,18 +1,4 @@
-# FINRA IMPLEMENTATION SUMMARY
-Oct 29, 2014 added region capabilities to S3
-
-Jan 13 - 17, 2014
-
-FINRA agenda consisted of the following integrations:
-
-* Amazon ec2, s3 and elb
-* LDAP
-* Jenkins
-
-...and a condensed training course
-
-
-#### Customer S3 Requirements:
+#### S3 Plugin Requirements:
 
 - Add/Delete files & folders into existing folders
 - Support encrypted buckets
@@ -20,26 +6,6 @@ FINRA agenda consisted of the following integrations:
 
 These requirements were satisfied by extending Deployit with the boto library and python scripts.
 
-#### Customer EC2 Requirements:
-
-Following the Deployit POC, the ec2-plugin-3.9.4 was released which included all of FINRA's required properties except:
-
-- IAM Role Support
-- Storage Support
-
-Current status is a hotfix was made to ec2 plugin that incorporates IAM Role support and will be sent to customer for testing.
-
-
-#### Customer ELB Requirements:
-
-- Region Name
-- Vm Template Name
-- Instance Count
-- Instance Type
-- Security Group
-
-
-Notes:
 
 1. Ability to create & delete S3 buckets were developed via a synthetic.xml type and python scripts during implementation prep but customer decided to remove this feature due to internal policy restricting bucket creation (feature may be useful for other customers).  Included within the create bucket python script is a policy (using json) that requires all uploaded files to be encrypted.
 
