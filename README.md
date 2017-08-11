@@ -1,3 +1,5 @@
+## DEPRECATED: Use the official [XLD AWS plugin](https://docs.xebialabs.com/xl-deploy-xld-aws-plugin/7.1.x/awsPluginManual.html)
+
 #### S3 Plugin Requirements:
 
 - Add/Delete files & folders into existing folders
